@@ -4,6 +4,10 @@ ComfyUI nodes that run [Nunchaku](https://github.com/nunchaku-ai/nunchaku) 4-bit
 [nunchaku-rocm](https://github.com/TwelveNights/nunchaku-rocm) (Triton kernels, plus native int4 kernels on RDNA3):
 FLUX.1, FLUX.2 [klein], Qwen-Image, Z-Image-Turbo and SDXL.
 
+![FLUX.2 [klein] 4B on an RX 7800 XT: stock ComfyUI bf16 10.9 s, this node pack int4 3.0 s](assets/klein-4b-stock-vs-int4.jpg)
+
+![int4 outputs on an RX 7800 XT: FLUX.2 [klein] 4B 2.9 s, FLUX.1-schnell 5.5 s, Z-Image-Turbo 8.4 s, SDXL 10.6 s](assets/int4-outputs-rx7800xt.jpg)
+
 Only the diffusion model is replaced. Text encoders, VAE, sampler and scheduler are ComfyUI's own nodes, so the usual
 workflows apply with one node swapped.
 

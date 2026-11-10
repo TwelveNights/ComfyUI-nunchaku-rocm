@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-nunchaku-rocm"
-version = "1.0.0"
-description = "Nunchaku 4-bit SVDQuant models (FLUX.1, FLUX.2 [klein], Qwen-Image, Z-Image-Turbo, SDXL) on AMD GPUs, on nunchaku-rocm."
+version = "1.0.1"
+description = "Run Nunchaku 4-bit SVDQuant models on AMD Radeon and Instinct GPUs (ROCm): up to 3.6x faster than stock ComfyUI on a 16 GB RX 7800 XT. Supported models: FLUX.2 [klein] 4B and 9B, FLUX.1-schnell, Qwen-Image and Qwen-Image Lightning, Z-Image-Turbo, SDXL and SDXL-Turbo. Includes a LoRA loader for FLUX models. Needs nunchaku-rocm."
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
@@ -14,4 +14,4 @@ Repository = "https://github.com/TwelveNights/ComfyUI-nunchaku-rocm"
 [tool.comfy]
 PublisherId = "twelvenights"
 DisplayName = "Nunchaku (ROCm)"
-Icon = ""
+Icon = "https://raw.githubusercontent.com/TwelveNights/ComfyUI-nunchaku-rocm/main/assets/icon.png"
