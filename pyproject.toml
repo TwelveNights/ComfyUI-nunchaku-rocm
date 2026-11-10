@@ -12,6 +12,6 @@ dependencies = []
 Repository = "https://github.com/TwelveNights/ComfyUI-nunchaku-rocm"
 
 [tool.comfy]
-PublisherId = ""
+PublisherId = "twelvenights"
 DisplayName = "Nunchaku (ROCm)"
 Icon = ""
