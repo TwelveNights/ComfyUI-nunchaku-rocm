@@ -1,0 +1,17 @@
+[project]
+name = "comfyui-nunchaku-rocm"
+version = "1.0.0"
+description = "Nunchaku 4-bit SVDQuant models (FLUX.1, FLUX.2 [klein], Qwen-Image, Z-Image-Turbo, SDXL) on AMD GPUs, on nunchaku-rocm."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+# nunchaku-rocm is installed separately on top of a ROCm PyTorch; listing it here would let pip replace that PyTorch.
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/TwelveNights/ComfyUI-nunchaku-rocm"
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "Nunchaku (ROCm)"
+Icon = ""
