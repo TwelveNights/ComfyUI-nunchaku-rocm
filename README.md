@@ -55,13 +55,17 @@ Use the **int4** checkpoints: AMD GPUs have no FP4 matrix units, so NVFP4 files 
 | --- | --- | --- | --- |
 | FLUX.2 [klein] 4B | `tonera/FLUX.2-klein-4B-Nunchaku`: `svdq-int4_r32-…` | `qwen_3_4b.safetensors` (type `flux2`) | `flux2-vae.safetensors` |
 | FLUX.2 [klein] 9B | `tonera/FLUX.2-klein-9B-Nunchaku`: `svdq-int4_r32-…` | `qwen_3_8b_fp8mixed.safetensors` (type `flux2`) | `flux2-vae.safetensors` |
-| FLUX.1-schnell / dev | `nunchaku-ai/nunchaku-flux.1-schnell` (or `-dev`): `svdq-int4_r32-…` | `clip_l` + `t5xxl_fp16` (DualCLIPLoader, type `flux`) | `ae.safetensors` |
+| FLUX.1-schnell / dev / Krea / Kontext | `nunchaku-ai/nunchaku-flux.1-schnell` (or `-dev`, `-krea-dev`, `-kontext-dev`): `svdq-int4_r32-…` | `clip_l` + `t5xxl_fp16` (DualCLIPLoader, type `flux`) | `ae.safetensors` |
 | Qwen-Image, Lightning | `nunchaku-ai/nunchaku-qwen-image`: `svdq-int4_r32-qwen-image…` | `qwen_2.5_vl_7b_fp8_scaled.safetensors` (type `qwen_image`) | `qwen_image_vae.safetensors` |
+| Qwen-Image-Edit, Edit-2509 | `nunchaku-ai/nunchaku-qwen-image-edit` (or `-edit-2509`): `svdq-int4_r32-…` | `qwen_2.5_vl_7b_fp8_scaled.safetensors` (type `qwen_image`) | `qwen_image_vae.safetensors` |
 | Z-Image-Turbo | `nunchaku-ai/nunchaku-z-image-turbo`: `svdq-int4_r32-z-image-turbo` | `qwen_3_4b.safetensors` (type `lumina2`) | `ae.safetensors` |
 | SDXL, SDXL-Turbo | `nunchaku-ai/nunchaku-sdxl`, `nunchaku-ai/nunchaku-sdxl-turbo` | `clip_l` + `clip_g` (DualCLIPLoader, type `sdxl`) | `sdxl_vae.safetensors` |
 
-Not supported yet: ControlNet, Qwen-Image-Edit and reference latents for Qwen-Image / Z-Image, and model-patching
-nodes that replace transformer blocks or attention (ignored with a warning).
+Qwen-Image-Edit works with ComfyUI's usual edit nodes (`TextEncodeQwenImageEditPlus` / `ReferenceLatent`).
+
+Not supported yet: ControlNet, Z-Image's reference inputs, the `index_timestep_zero` reference method
+(Qwen-Image-Edit-2511), and model-patching nodes that replace transformer blocks or attention (ignored with a
+warning).
 
 ## LoRA
 
