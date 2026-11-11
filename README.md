@@ -30,8 +30,8 @@ Category *Nunchaku (ROCm)*:
   type is read from the checkpoint. Qwen-Image only: `cpu_offload` (`auto` / `enable` / `disable`) streams the
   transformer blocks from CPU memory, on by default below 20 GiB of VRAM; `num_blocks_on_gpu` keeps more blocks
   resident.
-- **Nunchaku LoRA Loader (ROCm)** adds a LoRA to a FLUX.1 / FLUX.2 [klein] model (chain several for more).
-  ComfyUI's own LoraLoader cannot reach the 4-bit layers.
+- **Nunchaku LoRA Loader (ROCm)** adds a LoRA to any of these models (chain several for more). ComfyUI's own
+  LoraLoader cannot reach the 4-bit layers. See [LoRA](#lora).
 
 ## Install
 
@@ -60,8 +60,25 @@ Use the **int4** checkpoints: AMD GPUs have no FP4 matrix units, so NVFP4 files 
 | Z-Image-Turbo | `nunchaku-ai/nunchaku-z-image-turbo`: `svdq-int4_r32-z-image-turbo` | `qwen_3_4b.safetensors` (type `lumina2`) | `ae.safetensors` |
 | SDXL, SDXL-Turbo | `nunchaku-ai/nunchaku-sdxl`, `nunchaku-ai/nunchaku-sdxl-turbo` | `clip_l` + `clip_g` (DualCLIPLoader, type `sdxl`) | `sdxl_vae.safetensors` |
 
-Not supported yet: ControlNet, Qwen-Image-Edit and reference latents for Qwen-Image / Z-Image, LoRA for Qwen-Image /
-Z-Image / SDXL, and model-patching nodes that replace transformer blocks or attention (ignored with a warning).
+Not supported yet: ControlNet, Qwen-Image-Edit and reference latents for Qwen-Image / Z-Image, and model-patching
+nodes that replace transformer blocks or attention (ignored with a warning).
+
+## LoRA
+
+![Without and with a LoRA, int4 models on a Radeon PRO W7900](assets/lora-examples.jpg)
+
+Put LoRAs in `models/loras` and add **Nunchaku LoRA Loader (ROCm)** between the DiT loader and the sampler; chain one
+per LoRA. It reads ComfyUI, kohya (`lora_unet_...`) and diffusers / PEFT LoRA files for FLUX.1, FLUX.2 [klein],
+Z-Image, Qwen-Image (with or without CPU offload) and SDXL, including SDXL convolution (LoCon) LoRAs such as
+LCM-LoRA. Text-encoder weights in a LoRA file are ignored.
+
+On the 4-bit layers the LoRA is added to their 16-bit low-rank branch, so it costs no extra kernels. Switching LoRAs or
+strengths between runs re-applies them in a fraction of a second, and workflow branches with and without LoRAs share
+one loaded model.
+
+Checked against ComfyUI's own LoRA loading on the bf16 models (same seed): the images above match the bf16 + LoRA
+results in style and composition. The model is quantized to 4 bits, so a LoRA's effect is close to, not identical
+with, its effect on the full-precision model; very subtle LoRAs are the least precise.
 
 ## License
 
