@@ -55,7 +55,8 @@ ROCm PyTorch.
 
 The first image of each model compiles and autotunes kernels and can take a minute or two; later runs use the cache.
 
-Tested from scratch on ComfyUI 0.45's Windows portable for AMD GPUs (PyTorch 2.9.1, ROCm 7.2.1, RX 7800 XT). With
+Tested from scratch on ComfyUI 0.45's Windows portable for AMD GPUs (PyTorch 2.9.1, ROCm 7.2.1, RX 7800 XT; installed
+through ComfyUI-Manager, then as fast as a hand-built install) and on Linux (PyTorch 2.10 for ROCm 7.0, MI300X). With
 other ROCm versions on Windows, install the matching ROCm SDK devel wheel yourself (`install.py` says so), or follow
 [nunchaku-rocm's install guide](https://github.com/TwelveNights/nunchaku-rocm#install).
 
