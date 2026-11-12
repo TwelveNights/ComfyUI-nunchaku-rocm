@@ -94,7 +94,14 @@
     }
    ],
    "properties": {
-    "Node name for S&R": "NunchakuRocmDiTLoader"
+    "Node name for S&R": "NunchakuRocmDiTLoader",
+    "models": [
+     {
+      "name": "svdq-int4_r32-sdxl-turbo.safetensors",
+      "url": "https://huggingface.co/nunchaku-ai/nunchaku-sdxl-turbo/resolve/main/svdq-int4_r32-sdxl-turbo.safetensors",
+      "directory": "diffusion_models"
+     }
+    ]
    },
    "widgets_values": [
     "svdq-int4_r32-sdxl-turbo.safetensors",
@@ -214,7 +221,19 @@
    ],
    "title": "Load CLIP",
    "properties": {
-    "Node name for S&R": "DualCLIPLoader"
+    "Node name for S&R": "DualCLIPLoader",
+    "models": [
+     {
+      "name": "clip_l.safetensors",
+      "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors",
+      "directory": "text_encoders"
+     },
+     {
+      "name": "clip_g.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/stable-diffusion-3.5-fp8/resolve/main/text_encoders/clip_g.safetensors",
+      "directory": "text_encoders"
+     }
+    ]
    },
    "widgets_values": [
     "clip_l.safetensors",
@@ -555,7 +574,14 @@
     }
    ],
    "properties": {
-    "Node name for S&R": "VAELoader"
+    "Node name for S&R": "VAELoader",
+    "models": [
+     {
+      "name": "sdxl_vae.safetensors",
+      "url": "https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors",
+      "directory": "vae"
+     }
+    ]
    },
    "widgets_values": [
     "sdxl_vae.safetensors"

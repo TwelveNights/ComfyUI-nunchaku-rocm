@@ -64,6 +64,12 @@ other ROCm versions on Windows, install the matching ROCm SDK devel wheel yourse
 
 Use the **int4** checkpoints: AMD GPUs have no FP4 matrix units, so NVFP4 files run on a slower emulated path.
 
+The example workflows carry download links for every file they use: open one and ComfyUI lists the missing models
+with a **Download** button each (ComfyUI's own panel; in the browser the files go to your downloads folder, so move
+them into the `models` folder shown next to each, while ComfyUI Desktop saves them in place). The table lists the
+same files. For SDXL, `clip_g.safetensors` from `Comfy-Org/stable-diffusion-3.5-fp8` is SDXL's second text encoder
+(identical weights).
+
 | Model | Checkpoint (`models/diffusion_models`) | Text encoder(s) (`models/text_encoders`) | VAE (`models/vae`) |
 | --- | --- | --- | --- |
 | FLUX.2 [klein] 4B | `tonera/FLUX.2-klein-4B-Nunchaku`: `svdq-int4_r32-…` | `qwen_3_4b.safetensors` (type `flux2`) | `flux2-vae.safetensors` |

@@ -93,7 +93,14 @@
     }
    ],
    "properties": {
-    "Node name for S&R": "NunchakuRocmDiTLoader"
+    "Node name for S&R": "NunchakuRocmDiTLoader",
+    "models": [
+     {
+      "name": "svdq-int4_r32-qwen-image-lightningv1.1-8steps.safetensors",
+      "url": "https://huggingface.co/nunchaku-ai/nunchaku-qwen-image/resolve/main/svdq-int4_r32-qwen-image-lightningv1.1-8steps.safetensors",
+      "directory": "diffusion_models"
+     }
+    ]
    },
    "widgets_values": [
     "svdq-int4_r32-qwen-image-lightningv1.1-8steps.safetensors",
@@ -294,7 +301,14 @@
     }
    ],
    "properties": {
-    "Node name for S&R": "CLIPLoader"
+    "Node name for S&R": "CLIPLoader",
+    "models": [
+     {
+      "name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "directory": "text_encoders"
+     }
+    ]
    },
    "widgets_values": [
     "qwen_2.5_vl_7b_fp8_scaled.safetensors",
@@ -500,7 +514,14 @@
     }
    ],
    "properties": {
-    "Node name for S&R": "VAELoader"
+    "Node name for S&R": "VAELoader",
+    "models": [
+     {
+      "name": "qwen_image_vae.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors",
+      "directory": "vae"
+     }
+    ]
    },
    "widgets_values": [
     "qwen_image_vae.safetensors"

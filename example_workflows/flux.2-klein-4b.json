@@ -93,7 +93,14 @@
     }
    ],
    "properties": {
-    "Node name for S&R": "NunchakuRocmDiTLoader"
+    "Node name for S&R": "NunchakuRocmDiTLoader",
+    "models": [
+     {
+      "name": "svdq-int4_r32-FLUX.2-klein-4B-Nunchaku.safetensors",
+      "url": "https://huggingface.co/tonera/FLUX.2-klein-4B-Nunchaku/resolve/main/svdq-int4_r32-FLUX.2-klein-4B-Nunchaku.safetensors",
+      "directory": "diffusion_models"
+     }
+    ]
    },
    "widgets_values": [
     "svdq-int4_r32-FLUX.2-klein-4B-Nunchaku.safetensors",
@@ -195,7 +202,14 @@
     }
    ],
    "properties": {
-    "Node name for S&R": "CLIPLoader"
+    "Node name for S&R": "CLIPLoader",
+    "models": [
+     {
+      "name": "qwen_3_4b.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors",
+      "directory": "text_encoders"
+     }
+    ]
    },
    "widgets_values": [
     "qwen_3_4b.safetensors",
@@ -401,7 +415,14 @@
     }
    ],
    "properties": {
-    "Node name for S&R": "VAELoader"
+    "Node name for S&R": "VAELoader",
+    "models": [
+     {
+      "name": "flux2-vae.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b/resolve/main/split_files/vae/flux2-vae.safetensors",
+      "directory": "vae"
+     }
+    ]
    },
    "widgets_values": [
     "flux2-vae.safetensors"
