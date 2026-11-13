@@ -38,29 +38,39 @@ Category *Nunchaku (ROCm)*:
 You need ComfyUI running on a ROCm PyTorch, e.g. ComfyUI's **Windows portable for AMD GPUs** or a Linux install with
 ROCm PyTorch.
 
-1. Install this node pack with **ComfyUI Manager** (search for "nunchaku rocm"), or clone it into
-   `ComfyUI/custom_nodes` and run its `install.py` with ComfyUI's Python
-   (`python_embeded\python.exe install.py` on the Windows portable):
+1. **Install the node pack** with **ComfyUI Manager**: *Custom Nodes Manager*, search for **nunchaku rocm**,
+   install, and restart ComfyUI when it asks. (No Manager button? Start ComfyUI with `--enable-manager`.) Manager
+   installs `requirements.txt`: [nunchaku-rocm](https://pypi.org/project/nunchaku-rocm/) from PyPI and, on Windows,
+   `triton-windows`. Neither asks for a particular torch, so your ROCm PyTorch stays as it is. Without Manager:
 
    ```
+   cd ComfyUI/custom_nodes
    git clone https://github.com/TwelveNights/ComfyUI-nunchaku-rocm.git
+   python -m pip install -r ComfyUI-nunchaku-rocm/requirements.txt
    ```
 
-   `install.py` (Manager runs it for you) installs [nunchaku-rocm](https://pypi.org/project/nunchaku-rocm/) from
-   PyPI with your installed `torch` / `torchvision` / `torchaudio` / ROCm packages pinned, so it never replaces your
-   PyTorch. On Windows it also adds `triton-windows`, the ROCm SDK devel package matching your ROCm wheels, and the
-   Python `include` / `libs` folders the portable build leaves out (Triton compiles against them). It does nothing
-   unless PyTorch is a ROCm build.
-2. Restart ComfyUI and open an example workflow: *Templates* in the left sidebar, then **Extensions >
-   comfyui-nunchaku-rocm** at the bottom of the list (**ComfyUI-nunchaku-rocm** if you cloned it). The same files
-   are in [`example_workflows`](example_workflows).
+   On the Windows portable, use `python_embeded\python.exe` from the portable folder as `python`.
+2. **Windows only, once:** Triton also needs the ROCm SDK devel package that matches your ROCm wheels. It comes from
+   AMD's repo.radeon.com, so Manager cannot install it. When it is missing, ComfyUI's console (and the DiT loader,
+   if you run it) shows the exact command, for ComfyUI 0.45's portable:
+
+   ```
+   python_embeded\python.exe -s -m pip install https://repo.radeon.com/rocm/windows/rocm-rel-7.2.1/rocm_sdk_devel-7.2.1-py3-none-win_amd64.whl
+   ```
+
+   Run it with ComfyUI closed, then start ComfyUI again. Python's `include` / `libs` folders, which the portable
+   build leaves out and Triton needs, are added automatically on the first start.
+3. **Open an example workflow**: *Templates* in the left sidebar, then **Extensions > comfyui-nunchaku-rocm** at the
+   bottom of the list (**ComfyUI-nunchaku-rocm** if you cloned it). The same files are in
+   [`example_workflows`](example_workflows). Each workflow lists its missing models with download links.
 
 The first image of each model compiles and autotunes kernels and can take a minute or two; later runs use the cache.
 
-Tested from scratch on ComfyUI 0.45's Windows portable for AMD GPUs (PyTorch 2.9.1, ROCm 7.2.1, RX 7800 XT; installed
-through ComfyUI-Manager, then as fast as a hand-built install) and on Linux (PyTorch 2.10 for ROCm 7.0, MI300X). With
-other ROCm versions on Windows, install the matching ROCm SDK devel wheel yourself (`install.py` says so), or follow
-[nunchaku-rocm's install guide](https://github.com/TwelveNights/nunchaku-rocm#install).
+Tested from scratch on ComfyUI 0.45's Windows portable for AMD GPUs (PyTorch 2.9.1, ROCm 7.2.1, RX 7800 XT;
+installed through ComfyUI Manager, then as fast as a hand-built install) and on Linux (PyTorch 2.10 for ROCm 7.0,
+MI300X). The package installs a module named `nunchaku`, so do not install it next to the official CUDA
+`nunchaku` package; see [nunchaku-rocm's install guide](https://github.com/TwelveNights/nunchaku-rocm#install) for
+other setups.
 
 ## Models
 

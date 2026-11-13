@@ -256,6 +256,11 @@ class NunchakuDiTLoader:
     )
 
     def load(self, model_name: str, cpu_offload: str = "auto", num_blocks_on_gpu: int = 1):
+        if os.name == "nt":
+            from . import windows_setup
+
+            if windows_setup.MESSAGE:
+                raise RuntimeError(windows_setup.MESSAGE)
         path = folder_paths.get_full_path_or_raise("diffusion_models", model_name)
         return (load_model(path, cpu_offload=cpu_offload, num_blocks_on_gpu=num_blocks_on_gpu),)
 

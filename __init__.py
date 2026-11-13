@@ -26,7 +26,7 @@ def _use_rocm_sdk() -> None:
         from rocm_sdk import _devel
 
         root = str(_devel.get_devel_root())
-    except Exception:  # noqa: BLE001 - the devel package is missing; install.py reports how to add it
+    except Exception:  # noqa: BLE001 - the devel package is missing; windows_setup reports how to add it
         return
     os.environ["ROCM_HOME"] = root
     os.environ.setdefault("HIP_PATH", root)
@@ -41,6 +41,12 @@ def _use_rocm_sdk() -> None:
 
 
 if os.name == "nt":
+    import torch
+
+    if torch.version.hip:
+        from . import windows_setup
+
+        windows_setup.check()
     _use_rocm_sdk()
 
 from .nodes import NODE_CLASS_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS  # noqa: E402
