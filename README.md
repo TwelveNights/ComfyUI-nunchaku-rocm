@@ -51,7 +51,9 @@ ROCm PyTorch.
    PyTorch. On Windows it also adds `triton-windows`, the ROCm SDK devel package matching your ROCm wheels, and the
    Python `include` / `libs` folders the portable build leaves out (Triton compiles against them). It does nothing
    unless PyTorch is a ROCm build.
-2. Restart ComfyUI and open a workflow from [`example_workflows`](example_workflows).
+2. Restart ComfyUI and open an example workflow: *Templates* in the left sidebar, then **Extensions >
+   comfyui-nunchaku-rocm** at the bottom of the list (**ComfyUI-nunchaku-rocm** if you cloned it). The same files
+   are in [`example_workflows`](example_workflows).
 
 The first image of each model compiles and autotunes kernels and can take a minute or two; later runs use the cache.
 
@@ -106,3 +108,8 @@ with, its effect on the full-precision model; very subtle LoRAs are the least pr
 ## License
 
 Apache License 2.0, like Nunchaku and nunchaku-rocm.
+
+## Related
+
+- [ComfyUI-3D-rocm](https://github.com/TwelveNights/ComfyUI-3D-rocm): image to textured 3D model (TripoSG, Hunyuan3D-2.1 Paint) on AMD
+- [SageAttention-rocm](https://github.com/TwelveNights/SageAttention-rocm): 8-bit attention for AMD GPUs

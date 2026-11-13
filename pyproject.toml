@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-nunchaku-rocm"
-version = "1.2.2"
-description = "Run Nunchaku 4-bit SVDQuant models on AMD Radeon and Instinct GPUs (ROCm): up to 3.6x faster than stock ComfyUI on a 16 GB RX 7800 XT. Supported models: FLUX.2 [klein] 4B and 9B, FLUX.1-schnell, dev, Krea and Kontext, Qwen-Image, Qwen-Image Lightning and Qwen-Image-Edit, Z-Image-Turbo, SDXL and SDXL-Turbo. Includes a LoRA loader for all of them, including speed LoRAs (LCM, Qwen-Image Lightning). Needs nunchaku-rocm."
+version = "1.2.3"
+description = "Run Nunchaku 4-bit SVDQuant models on AMD Radeon and Instinct GPUs (ROCm): up to 3.6x faster than stock ComfyUI on a 16 GB RX 7800 XT. Supported models: FLUX.2 [klein] 4B and 9B, FLUX.1-schnell, dev, Krea and Kontext, Qwen-Image, Qwen-Image Lightning and Qwen-Image-Edit, Z-Image-Turbo, SDXL and SDXL-Turbo. Includes a LoRA loader for all of them, including speed LoRAs (LCM, Qwen-Image Lightning). Setup: install here and restart ComfyUI; install.py adds nunchaku-rocm (and Triton on Windows) without touching your PyTorch. Then open Templates > Extensions > comfyui-nunchaku-rocm: each example workflow lists its model downloads. The first image of each model compiles kernels for a minute or two."
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
