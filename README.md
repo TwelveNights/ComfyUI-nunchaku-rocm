@@ -122,4 +122,4 @@ Apache License 2.0, like Nunchaku and nunchaku-rocm.
 ## Related
 
 - [ComfyUI-3D-rocm](https://github.com/TwelveNights/ComfyUI-3D-rocm): image to textured 3D model (TripoSG, Hunyuan3D-2.1 Paint) on AMD
-- [SageAttention-rocm](https://github.com/TwelveNights/SageAttention-rocm): 8-bit attention for AMD GPUs
+- [SageAttention-rocm](https://github.com/TwelveNights/SageAttention-rocm) (`pip install sageattention-rocm`): 8-bit attention for AMD GPUs, for ComfyUI's `--use-sage-attention`
