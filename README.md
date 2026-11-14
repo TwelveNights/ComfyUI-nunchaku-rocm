@@ -19,9 +19,9 @@ workflows apply with one node swapped.
 | Qwen-Image Lightning, 8 steps | 11.6 s |
 | SDXL, 30 steps | 10.6-10.7 s |
 
-Warm runs with ComfyUI started with `--highvram` (without it, Z-Image-Turbo takes 11-12 s per image: ComfyUI unloads and reloads
-models between runs). Measurements, VRAM notes and accuracy checks against ComfyUI's bf16 models are in
-[nunchaku-rocm's ComfyUI notes](https://github.com/TwelveNights/nunchaku-rocm/blob/main/comfyui/README.md).
+Warm runs with ComfyUI started with `--highvram` (without it, Z-Image-Turbo takes 11-12 s per image: ComfyUI
+unloads and reloads models between runs). Measurements, VRAM notes and accuracy checks against ComfyUI's bf16 models
+are in [nunchaku-rocm's ComfyUI notes](https://github.com/TwelveNights/nunchaku-rocm/blob/main/comfyui/README.md).
 
 ## Nodes
 
