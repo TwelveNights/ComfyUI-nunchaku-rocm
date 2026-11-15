@@ -48,14 +48,17 @@ ROCm PyTorch.
    cd ComfyUI/custom_nodes
    git clone https://github.com/TwelveNights/ComfyUI-nunchaku-rocm.git
    python -m pip install -r ComfyUI-nunchaku-rocm/requirements.txt
+   python ComfyUI-nunchaku-rocm/install.py   # Windows: adds what Triton needs (step 2); does nothing on Linux
    ```
 
    On the Windows portable, use `python_embeded\python.exe` from the portable folder as `python`.
-2. **Windows only, once:** Triton compiles a small launcher at first use and needs two things that `requirements.txt`
-   cannot provide: the ROCm SDK devel package matching your ROCm wheels (from AMD's repo.radeon.com), and Python's
-   `include` / `libs` folders, which the portable's embedded Python leaves out. When either is missing, ComfyUI's
-   console (and the DiT loader, if you run it) lists what is missing with the exact file for your setup. For ComfyUI
-   0.45's portable (Python 3.12, ROCm 7.2.1), close ComfyUI and run from the folder that contains `python_embeded`:
+2. **Windows only:** Triton compiles a small launcher at first use and needs two things `requirements.txt` cannot
+   provide: the ROCm SDK devel package matching your ROCm wheels (from AMD's repo.radeon.com) and Python's
+   `include` / `libs` folders, which the portable's embedded Python leaves out. Manager's install runs `install.py`,
+   which adds both (with your torch and ROCm packages pinned). If they are still missing, e.g. after a `git clone`
+   without `install.py`, ComfyUI's console (and the DiT loader) lists what is missing; for ComfyUI 0.45's portable
+   (Python 3.12, ROCm 7.2.1), close ComfyUI and run from the folder that contains `python_embeded` either
+   `python_embeded\python.exe ComfyUI\custom_nodes\ComfyUI-nunchaku-rocm\install.py` or:
 
    ```bat
    python_embeded\python.exe -s -m pip install https://repo.radeon.com/rocm/windows/rocm-rel-7.2.1/rocm_sdk_devel-7.2.1-py3-none-win_amd64.whl

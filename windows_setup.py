@@ -1,6 +1,6 @@
 """
 What Triton needs on Windows beyond requirements.txt (nunchaku-rocm, triton-windows), checked when ComfyUI starts.
-Nothing is installed or downloaded from here; what is missing is reported with the README section that covers it:
+Nothing is installed or downloaded from here (install.py does that); what is missing is reported:
 
 - the ROCm SDK devel package matching the installed ROCm wheels (HIP headers), from repo.radeon.com;
 - Python's ``include`` / ``libs`` folders, which the embedded Python of ComfyUI's portable build leaves out.
@@ -59,7 +59,8 @@ def check() -> str | None:
     missing = _missing()
     if not missing:
         return None
-    MESSAGE = ("nunchaku-rocm needs a one-time setup on Windows (close ComfyUI first), see " + DOCS + ". Missing:\n  - "
-               + "\n  - ".join(missing))
+    MESSAGE = ("nunchaku-rocm needs a one-time setup on Windows: close ComfyUI and run this node pack's install.py with "
+               f'ComfyUI\'s Python ("{sys.executable}" install.py in {os.path.dirname(os.path.abspath(__file__))}), '
+               "or see " + DOCS + ". Missing:\n  - " + "\n  - ".join(missing))
     logger.warning("[nunchaku-rocm] %s", MESSAGE)
     return MESSAGE
