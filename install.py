@@ -22,7 +22,8 @@ import tempfile
 import urllib.request
 import zipfile
 
-from windows_setup import INCLUDE_LIBS_URL, PYTHON_INCLUDE_LIBS, ROCM_DEVEL_URL
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # the portable's embedded Python skips the script dir
+from windows_setup import INCLUDE_LIBS_URL, PYTHON_INCLUDE_LIBS, ROCM_DEVEL_URL  # noqa: E402
 
 PINNED = re.compile(r"(torch|torchvision|torchaudio|triton|pytorch-triton|rocm)", re.IGNORECASE)
 
