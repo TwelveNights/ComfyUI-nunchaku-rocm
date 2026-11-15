@@ -51,16 +51,19 @@ ROCm PyTorch.
    ```
 
    On the Windows portable, use `python_embeded\python.exe` from the portable folder as `python`.
-2. **Windows only, once:** Triton also needs the ROCm SDK devel package that matches your ROCm wheels. It comes from
-   AMD's repo.radeon.com, so Manager cannot install it. When it is missing, ComfyUI's console (and the DiT loader,
-   if you run it) shows the exact command, for ComfyUI 0.45's portable:
+2. **Windows only, once:** Triton compiles a small launcher at first use and needs two things that `requirements.txt`
+   cannot provide: the ROCm SDK devel package matching your ROCm wheels (from AMD's repo.radeon.com), and Python's
+   `include` / `libs` folders, which the portable's embedded Python leaves out. When either is missing, ComfyUI's
+   console (and the DiT loader, if you run it) lists what is missing with the exact file for your setup. For ComfyUI
+   0.45's portable (Python 3.12, ROCm 7.2.1), close ComfyUI and run from the folder that contains `python_embeded`:
 
-   ```
+   ```bat
    python_embeded\python.exe -s -m pip install https://repo.radeon.com/rocm/windows/rocm-rel-7.2.1/rocm_sdk_devel-7.2.1-py3-none-win_amd64.whl
+   curl.exe -L -o python_include_libs.zip https://github.com/woct0rdho/triton-windows/releases/download/v3.0.0-windows.post1/python_3.12.7_include_libs.zip
+   tar -xf python_include_libs.zip -C python_embeded
    ```
 
-   Run it with ComfyUI closed, then start ComfyUI again. Python's `include` / `libs` folders, which the portable
-   build leaves out and Triton needs, are added automatically on the first start.
+   Then start ComfyUI again. (Other ROCm or Python versions: use the file names the console prints.)
 3. **Open an example workflow**: *Templates* in the left sidebar, then **Extensions > comfyui-nunchaku-rocm** at the
    bottom of the list (**ComfyUI-nunchaku-rocm** if you cloned it). The same files are in
    [`example_workflows`](example_workflows). Each workflow lists its missing models with download links.
