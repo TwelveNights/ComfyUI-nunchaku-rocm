@@ -4,6 +4,8 @@ Run by ComfyUI-Manager after it installs this node pack and its requirements.txt
 
 Windows with a ROCm PyTorch only: adds what Triton needs there and requirements.txt cannot express,
 
+- triton-windows in the release series matching the installed PyTorch (each PyTorch minor version pairs with one
+  Triton minor version; requirements.txt cannot condition on the installed PyTorch);
 - the ROCm SDK devel package matching the installed ROCm wheels (HIP headers), from repo.radeon.com, installed with
   the installed torch / torchvision / torchaudio / triton / rocm packages pinned so pip cannot replace them;
 - Python's ``include`` / ``libs`` folders, which ComfyUI's portable (embedded) Python leaves out.
@@ -13,6 +15,7 @@ console says what is missing at the next start (see windows_setup.py).
 """
 
 import importlib.metadata as metadata
+import importlib.util
 import os
 import re
 import subprocess
@@ -23,7 +26,12 @@ import urllib.request
 import zipfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # the portable's embedded Python skips the script dir
-from windows_setup import INCLUDE_LIBS_URL, PYTHON_INCLUDE_LIBS, ROCM_DEVEL_URL  # noqa: E402
+from windows_setup import (  # noqa: E402
+    INCLUDE_LIBS_URL,
+    PYTHON_INCLUDE_LIBS,
+    ROCM_DEVEL_URL,
+    triton_windows_requirement,
+)
 
 PINNED = re.compile(r"(torch|torchvision|torchaudio|triton|pytorch-triton|rocm)", re.IGNORECASE)
 
@@ -39,13 +47,8 @@ def version(dist: str) -> str | None:
         return None
 
 
-def add_rocm_devel() -> None:
-    rocm = version("rocm-sdk-core")
-    if rocm is None or version("rocm-sdk-devel") is not None:
-        return
-    if not re.fullmatch(r"\d+\.\d+\.\d+", rocm):
-        log(f"install the ROCm SDK devel package matching rocm-sdk-core {rocm} by hand (README, install step 2)")
-        return
+def pip_install(requirement: str) -> None:
+    """pip install with the installed torch / torchvision / torchaudio / triton / rocm packages pinned."""
     with tempfile.TemporaryDirectory() as tmp:
         constraints = os.path.join(tmp, "constraints.txt")
         with open(constraints, "w") as f:
@@ -53,9 +56,25 @@ def add_rocm_devel() -> None:
                 name = dist.metadata["Name"] or ""
                 if PINNED.match(name):
                     f.write(f"{name}=={dist.version}\n")
-        cmd = [sys.executable, "-s", "-m", "pip", "install", "-c", constraints, ROCM_DEVEL_URL.format(v=rocm)]
+        cmd = [sys.executable, "-s", "-m", "pip", "install", "-c", constraints, requirement]
         log(" ".join(cmd))
         subprocess.check_call(cmd)
+
+
+def add_triton() -> None:
+    if importlib.util.find_spec("triton") is not None:
+        return
+    pip_install(triton_windows_requirement(version("torch") or ""))
+
+
+def add_rocm_devel() -> None:
+    rocm = version("rocm-sdk-core")
+    if rocm is None or version("rocm-sdk-devel") is not None:
+        return
+    if not re.fullmatch(r"\d+\.\d+\.\d+", rocm):
+        log(f"install the ROCm SDK devel package matching rocm-sdk-core {rocm} by hand (README, install step 2)")
+        return
+    pip_install(ROCM_DEVEL_URL.format(v=rocm))
 
 
 def add_python_include_libs() -> None:
@@ -85,6 +104,7 @@ def main() -> int:
     if not torch.version.hip:
         return 0
     try:
+        add_triton()
         add_rocm_devel()
         add_python_include_libs()
     except Exception as e:  # noqa: BLE001 - report and let ComfyUI start; windows_setup.py lists what is missing

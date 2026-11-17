@@ -41,8 +41,8 @@ ROCm PyTorch.
 
 1. **Install the node pack** with **ComfyUI Manager**: *Custom Nodes Manager*, search for **nunchaku rocm**,
    install, and restart ComfyUI when it asks. (No Manager button? Start ComfyUI with `--enable-manager`.) Manager
-   installs `requirements.txt`: [nunchaku-rocm](https://pypi.org/project/nunchaku-rocm/) from PyPI and, on Windows,
-   `triton-windows`. Neither asks for a particular torch, so your ROCm PyTorch stays as it is. Without Manager:
+   installs `requirements.txt`, which is [nunchaku-rocm](https://pypi.org/project/nunchaku-rocm/) from PyPI; it asks
+   for no particular torch, so your ROCm PyTorch stays as it is. Without Manager:
 
    ```
    cd ComfyUI/custom_nodes
@@ -52,15 +52,18 @@ ROCm PyTorch.
    ```
 
    On the Windows portable, use `python_embeded\python.exe` from the portable folder as `python`.
-2. **Windows only:** Triton compiles a small launcher at first use and needs two things `requirements.txt` cannot
-   provide: the ROCm SDK devel package matching your ROCm wheels (from AMD's repo.radeon.com) and Python's
-   `include` / `libs` folders, which the portable's embedded Python leaves out. Manager's install runs `install.py`,
-   which adds both (with your torch and ROCm packages pinned). If they are still missing, e.g. after a `git clone`
+2. **Windows only:** the kernels need Triton, from [`triton-windows`](https://github.com/woct0rdho/triton-windows) in
+   the release series that matches your PyTorch (PyTorch up to 2.11: 3.6, 2.12: 3.7.0, 2.13: 3.7.1, 2.14: 3.8,
+   2.15: 3.9). Triton compiles a small launcher at first use and also needs the ROCm SDK devel package matching your
+   ROCm wheels (from AMD's repo.radeon.com) and Python's `include` / `libs` folders, which the portable's embedded
+   Python leaves out. Manager's install runs `install.py`, which adds all three (with your torch and ROCm packages
+   pinned). If they are still missing, e.g. after a `git clone`
    without `install.py`, ComfyUI's console (and the DiT loader) lists what is missing; for ComfyUI 0.45's portable
    (Python 3.12, ROCm 7.2.1), close ComfyUI and run from the folder that contains `python_embeded` either
    `python_embeded\python.exe ComfyUI\custom_nodes\ComfyUI-nunchaku-rocm\install.py` or:
 
    ```bat
+   python_embeded\python.exe -s -m pip install "triton-windows>=3.6.0.post26,<3.7"
    python_embeded\python.exe -s -m pip install https://repo.radeon.com/rocm/windows/rocm-rel-7.2.1/rocm_sdk_devel-7.2.1-py3-none-win_amd64.whl
    curl.exe -L -o python_include_libs.zip https://github.com/woct0rdho/triton-windows/releases/download/v3.0.0-windows.post1/python_3.12.7_include_libs.zip
    tar -xf python_include_libs.zip -C python_embeded
