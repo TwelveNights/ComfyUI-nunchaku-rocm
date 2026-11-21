@@ -55,7 +55,8 @@ ROCm PyTorch.
 2. **Windows only:** the kernels need Triton, from [`triton-windows`](https://github.com/woct0rdho/triton-windows) in
    the release series that matches your PyTorch (PyTorch up to 2.11: 3.6, 2.12: 3.7.0, 2.13: 3.7.1, 2.14: 3.8,
    2.15: 3.9). Triton compiles a small launcher at first use and also needs the ROCm SDK devel package matching your
-   ROCm wheels (from AMD's repo.radeon.com) and Python's `include` / `libs` folders, which the portable's embedded
+   ROCm wheels (ROCm 7.x from AMD's repo.radeon.com, ROCm 10 and later from AMD's
+   `https://stable.repo.amd.com/rocm/whl-next/` index) and Python's `include` / `libs` folders, which the portable's embedded
    Python leaves out. Manager's install runs `install.py`, which adds all three (with your torch and ROCm packages
    pinned). If they are still missing, e.g. after a `git clone`
    without `install.py`, ComfyUI's console (and the DiT loader) lists what is missing; for ComfyUI 0.45's portable

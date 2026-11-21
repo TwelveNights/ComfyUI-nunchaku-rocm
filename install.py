@@ -6,7 +6,7 @@ Windows with a ROCm PyTorch only: adds what Triton needs there and requirements.
 
 - triton-windows in the release series matching the installed PyTorch (each PyTorch minor version pairs with one
   Triton minor version; requirements.txt cannot condition on the installed PyTorch);
-- the ROCm SDK devel package matching the installed ROCm wheels (HIP headers), from repo.radeon.com, installed with
+- the ROCm SDK devel package matching the installed ROCm wheels (HIP headers), from AMD's package servers, installed with
   the installed torch / torchvision / torchaudio / triton / rocm packages pinned so pip cannot replace them;
 - Python's ``include`` / ``libs`` folders, which ComfyUI's portable (embedded) Python leaves out.
 
@@ -29,7 +29,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # the portable's
 from windows_setup import (  # noqa: E402
     INCLUDE_LIBS_URL,
     PYTHON_INCLUDE_LIBS,
-    ROCM_DEVEL_URL,
+    rocm_devel_pip_args,
     triton_windows_requirement,
 )
 
@@ -47,7 +47,7 @@ def version(dist: str) -> str | None:
         return None
 
 
-def pip_install(requirement: str) -> None:
+def pip_install(*args: str) -> None:
     """pip install with the installed torch / torchvision / torchaudio / triton / rocm packages pinned."""
     with tempfile.TemporaryDirectory() as tmp:
         constraints = os.path.join(tmp, "constraints.txt")
@@ -56,7 +56,7 @@ def pip_install(requirement: str) -> None:
                 name = dist.metadata["Name"] or ""
                 if PINNED.match(name):
                     f.write(f"{name}=={dist.version}\n")
-        cmd = [sys.executable, "-s", "-m", "pip", "install", "-c", constraints, requirement]
+        cmd = [sys.executable, "-s", "-m", "pip", "install", "-c", constraints, *args]
         log(" ".join(cmd))
         subprocess.check_call(cmd)
 
@@ -71,10 +71,11 @@ def add_rocm_devel() -> None:
     rocm = version("rocm-sdk-core")
     if rocm is None or version("rocm-sdk-devel") is not None:
         return
-    if not re.fullmatch(r"\d+\.\d+\.\d+", rocm):
+    args = rocm_devel_pip_args(rocm)
+    if args is None:
         log(f"install the ROCm SDK devel package matching rocm-sdk-core {rocm} by hand (README, install step 2)")
         return
-    pip_install(ROCM_DEVEL_URL.format(v=rocm))
+    pip_install(*args)
 
 
 def add_python_include_libs() -> None:

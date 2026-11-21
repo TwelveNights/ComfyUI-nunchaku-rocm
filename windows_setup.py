@@ -3,7 +3,7 @@ What Triton needs on Windows beyond requirements.txt (nunchaku-rocm), checked wh
 Nothing is installed or downloaded from here (install.py does that); what is missing is reported:
 
 - triton-windows in the release series that matches the installed PyTorch;
-- the ROCm SDK devel package matching the installed ROCm wheels (HIP headers), from repo.radeon.com;
+- the ROCm SDK devel package matching the installed ROCm wheels (HIP headers), from AMD's package servers;
 - Python's ``include`` / ``libs`` folders, which the embedded Python of ComfyUI's portable build leaves out.
 """
 
@@ -18,7 +18,9 @@ import sysconfig
 logger = logging.getLogger(__name__)
 
 DOCS = "https://github.com/TwelveNights/ComfyUI-nunchaku-rocm#install (step 2, Windows only)"
+# ROCm 7.x Windows wheels are on repo.radeon.com; ROCm 10 and later are on AMD's whl-next index.
 ROCM_DEVEL_URL = "https://repo.radeon.com/rocm/windows/rocm-rel-{v}/rocm_sdk_devel-{v}-py3-none-win_amd64.whl"
+ROCM_INDEX_URL = "https://stable.repo.amd.com/rocm/whl-next/"
 PYTHON_INCLUDE_LIBS = {
     (3, 10): "python_3.10.11_include_libs.zip",
     (3, 11): "python_3.11.9_include_libs.zip",
@@ -49,6 +51,16 @@ def triton_windows_requirement(torch_version: str) -> str:
     return "triton-windows>=3.9"
 
 
+def rocm_devel_pip_args(rocm_version: str) -> list[str] | None:
+    """pip install arguments for the rocm-sdk-devel matching a rocm-sdk-core release version, or None."""
+    m = re.fullmatch(r"(\d+)\.\d+\.\d+", rocm_version)
+    if m is None:
+        return None
+    if int(m.group(1)) < 10:
+        return [ROCM_DEVEL_URL.format(v=rocm_version)]
+    return ["--index-url", ROCM_INDEX_URL, f"rocm-sdk-devel=={rocm_version}"]
+
+
 def _torch_version() -> str:
     return _version("torch") or ""
 
@@ -69,8 +81,9 @@ def _missing() -> list[str]:
         missing.append(f"{triton_windows_requirement(_torch_version())} (matching PyTorch {_torch_version()})")
     rocm = _version("rocm-sdk-core")
     if rocm is not None and _version("rocm-sdk-devel") is None:
-        wheel = ROCM_DEVEL_URL.format(v=rocm) if re.fullmatch(r"\d+\.\d+\.\d+", rocm) else f"version {rocm}"
-        missing.append(f"the ROCm SDK devel package matching rocm-sdk-core {rocm}: {wheel}")
+        args = rocm_devel_pip_args(rocm)
+        source = "pip install " + " ".join(args) if args else f"version {rocm}"
+        missing.append(f"the ROCm SDK devel package matching rocm-sdk-core {rocm}: {source}")
     base = os.path.dirname(sysconfig.get_paths()["include"])
     lib = f"python{sys.version_info.major}{sys.version_info.minor}.lib"
     if not (os.path.exists(os.path.join(base, "include", "Python.h")) and os.path.exists(os.path.join(base, "libs", lib))):
